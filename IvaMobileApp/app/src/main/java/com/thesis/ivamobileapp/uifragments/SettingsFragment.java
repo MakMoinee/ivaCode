@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -67,7 +68,9 @@ public class SettingsFragment extends Fragment {
     private void setDialogListeners() {
         dialogAddCamIpBinding.btnSave.setOnClickListener(v -> {
             String ip = dialogAddCamIpBinding.editIP.getText().toString().trim();
-
+            handler.saveCameraIP(ip);
+            Toast.makeText(requireContext(), "Successfully Saved Camera IP", Toast.LENGTH_SHORT).show();
+            mDialog.dismiss();
         });
     }
 

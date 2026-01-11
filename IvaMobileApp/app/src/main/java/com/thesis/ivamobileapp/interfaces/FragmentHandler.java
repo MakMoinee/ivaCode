@@ -5,4 +5,5 @@ public interface FragmentHandler {
     void onSettings();
     void onConnectBT();
     void onSendCommandBT(String command);
+    void saveCameraIP(String ip);
 }

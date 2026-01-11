@@ -24,9 +24,12 @@ import androidx.navigation.ui.NavigationUI;
 import com.google.android.material.navigation.NavigationBarView;
 import com.thesis.ivamobileapp.databinding.ActivityMainBinding;
 import com.thesis.ivamobileapp.interfaces.FragmentHandler;
+import com.thesis.ivamobileapp.preference.CameraPref;
 
 import java.io.IOException;
 import java.io.OutputStream;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Set;
 import java.util.UUID;
 
@@ -42,6 +45,7 @@ public class MainActivity extends AppCompatActivity implements FragmentHandler {
 
     private static final UUID UUID_SERIAL_PORT = UUID.fromString("00001101-0000-1000-8000-00805F9B34FB");
     private static final String DEVICE_NAME = "HC-06";  // Replace with your module's Bluetooth name
+    CameraPref cameraPref;
 
 
     @Override
@@ -151,5 +155,12 @@ public class MainActivity extends AppCompatActivity implements FragmentHandler {
     @Override
     public void onSendCommandBT(String command) {
         sendCommand(command);
+    }
+
+    @Override
+    public void saveCameraIP(String ip) {
+        Map<String,Object> map = new HashMap<>();
+        map.put("ip",ip);
+        new CameraPref(MainActivity.this).storeData(map);
     }
 }
