@@ -14,16 +14,23 @@
 
         <fragment
             android:id="@+id/mainFragment"
+            android:name="androidx.navigation.fragment.NavHostFragment"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginBottom="80dp" />
+            android:layout_marginBottom="80dp"
+            app:defaultNavHost="true"
+            app:navGraph="@navigation/main_navigation" />
 
         <com.google.android.material.bottomnavigation.BottomNavigationView
             android:id="@+id/bottomNav"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
-            android:background="@android:color/white"
+            android:background="#F5F5F5"
+            app:itemActiveIndicatorStyle="@android:color/black"
+            app:itemIconTint="@color/black"
+            app:itemTextAppearanceActiveBoldEnabled="true"
+            app:itemTextColor="@color/black"
             app:menu="@menu/menu_bottom_nav" />
     </RelativeLayout>
 
