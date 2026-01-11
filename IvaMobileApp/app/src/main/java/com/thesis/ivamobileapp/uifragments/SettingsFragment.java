@@ -8,10 +8,13 @@ import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.thesis.ivamobileapp.R;
 import com.thesis.ivamobileapp.adapters.SettingsAdapter;
+import com.thesis.ivamobileapp.databinding.DialogAddCamIpBinding;
 import com.thesis.ivamobileapp.databinding.FragmentSettingsBinding;
 import com.thesis.ivamobileapp.interfaces.FragmentHandler;
 import com.thesis.ivamobileapp.models.SettingItems;
@@ -24,6 +27,8 @@ public class SettingsFragment extends Fragment {
     SettingsAdapter adapter;
     List<SettingItems> settingItemList = new ArrayList<>();
     FragmentHandler handler;
+    DialogAddCamIpBinding dialogAddCamIpBinding;
+    AlertDialog mDialog;
 
     @Nullable
     @Override
@@ -42,10 +47,28 @@ public class SettingsFragment extends Fragment {
                         case "Connect Bluetooth":
                             handler.onConnectBT();
                             break;
+                        case "Set IVA Camera IP":
+                            AlertDialog.Builder mBuilder = new AlertDialog.Builder(requireContext());
+                            dialogAddCamIpBinding = DialogAddCamIpBinding.inflate(LayoutInflater.from(requireContext()), null, false);
+                            mBuilder.setView(dialogAddCamIpBinding.getRoot());
+                            setDialogListeners();
+                            mDialog = mBuilder.create();
+                            mDialog.show();
+                            break;
                     }
                 }
             });
+            binding.recycler.setLayoutManager(new LinearLayoutManager(requireContext()));
+            binding.recycler.setAdapter(adapter);
+
         }
+    }
+
+    private void setDialogListeners() {
+        dialogAddCamIpBinding.btnSave.setOnClickListener(v -> {
+            String ip = dialogAddCamIpBinding.editIP.getText().toString().trim();
+
+        });
     }
 
     private void buildSettings() {
@@ -53,6 +76,11 @@ public class SettingsFragment extends Fragment {
         SettingItems items = new SettingItems.SettingItemBuilder()
                 .setSettingName(settingItem1)
                 .setSettingImg(R.drawable.ic_bt)
+                .build();
+        settingItemList.add(items);
+        items = new SettingItems.SettingItemBuilder()
+                .setSettingName("Set IVA Camera IP")
+                .setSettingImg(R.drawable.ic_camera)
                 .build();
         settingItemList.add(items);
     }

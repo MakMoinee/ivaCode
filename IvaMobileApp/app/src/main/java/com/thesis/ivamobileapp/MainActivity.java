@@ -78,47 +78,44 @@ public class MainActivity extends AppCompatActivity implements FragmentHandler {
     private void connectToRobotCar() {
         progressDialog = ProgressDialog.show(MainActivity.this, "Connecting", "Please wait...", true);
 
-        new Handler().postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                if (ActivityCompat.checkSelfPermission(MainActivity.this, android.Manifest.permission.BLUETOOTH_CONNECT) != PackageManager.PERMISSION_GRANTED) {
-                    // Permission not granted, request it
-                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
-                        // Android 12 and above require runtime permission check for Bluetooth
-                        ActivityCompat.requestPermissions(MainActivity.this,
-                                new String[]{android.Manifest.permission.BLUETOOTH_CONNECT},
-                                1);
-                    }
-                } else {
+        new Handler().postDelayed(() -> {
+            if (ActivityCompat.checkSelfPermission(MainActivity.this, android.Manifest.permission.BLUETOOTH_CONNECT) != PackageManager.PERMISSION_GRANTED) {
+                // Permission not granted, request it
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+                    // Android 12 and above require runtime permission check for Bluetooth
+                    ActivityCompat.requestPermissions(MainActivity.this,
+                            new String[]{android.Manifest.permission.BLUETOOTH_CONNECT},
+                            1);
                 }
-                Set<BluetoothDevice> pairedDevices = bluetoothAdapter.getBondedDevices();
-
-                if (pairedDevices.size() > 0) {
-                    for (BluetoothDevice device : pairedDevices) {
-                        if (DEVICE_NAME.equals(device.getName())) {
-                            ivaCarDevice = device;
-                            break;
-                        }
-                    }
-                }
-
-                if (ivaCarDevice != null) {
-                    try {
-                        bluetoothSocket = ivaCarDevice.createRfcommSocketToServiceRecord(UUID_SERIAL_PORT);
-                        bluetoothSocket.connect();
-                        outputStream = bluetoothSocket.getOutputStream();
-                        Toast.makeText(MainActivity.this, "Connected to IVA", Toast.LENGTH_SHORT).show();
-
-                        sendCommand("%Z#");
-                    } catch (IOException e) {
-                        Toast.makeText(MainActivity.this, "Failed to connect to IVA", Toast.LENGTH_SHORT).show();
-                    }
-                } else {
-                    Toast.makeText(MainActivity.this, "IVA not found. Make sure it is paired.", Toast.LENGTH_SHORT).show();
-                }
-
-                progressDialog.dismiss();
+            } else {
             }
+            Set<BluetoothDevice> pairedDevices = bluetoothAdapter.getBondedDevices();
+
+            if (pairedDevices.size() > 0) {
+                for (BluetoothDevice device : pairedDevices) {
+                    if (DEVICE_NAME.equals(device.getName())) {
+                        ivaCarDevice = device;
+                        break;
+                    }
+                }
+            }
+
+            if (ivaCarDevice != null) {
+                try {
+                    bluetoothSocket = ivaCarDevice.createRfcommSocketToServiceRecord(UUID_SERIAL_PORT);
+                    bluetoothSocket.connect();
+                    outputStream = bluetoothSocket.getOutputStream();
+                    Toast.makeText(MainActivity.this, "Connected to IVA", Toast.LENGTH_SHORT).show();
+
+                    sendCommand("%Z#");
+                } catch (IOException e) {
+                    Toast.makeText(MainActivity.this, "Failed to connect to IVA", Toast.LENGTH_SHORT).show();
+                }
+            } else {
+                Toast.makeText(MainActivity.this, "IVA not found. Make sure it is paired.", Toast.LENGTH_SHORT).show();
+            }
+
+            progressDialog.dismiss();
         }, 2000);  // Delay for 2 seconds to simulate connection time
     }
 
@@ -149,5 +146,10 @@ public class MainActivity extends AppCompatActivity implements FragmentHandler {
     @Override
     public void onConnectBT() {
         connectToRobotCar();
+    }
+
+    @Override
+    public void onSendCommandBT(String command) {
+        sendCommand(command);
     }
 }
