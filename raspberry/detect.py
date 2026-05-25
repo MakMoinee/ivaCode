@@ -31,6 +31,8 @@ import threading
 import time
 from pathlib import Path
 
+import urllib.request
+
 import cv2
 import numpy as np
 from ultralytics import YOLO
@@ -40,14 +42,14 @@ from deep_sort_realtime.deepsort_tracker import DeepSort
 # Change CAMERA_MODE to switch sources without touching the CLI.
 #   "laptop" → index 0 (built-in / USB webcam)
 #   "ipcam"  → IP camera stream defined by IP_CAM_URL
-CAMERA_MODE = "laptop"
+CAMERA_MODE = "ipcam"
 
 # Full RTSP or HTTP URL of your IP camera.
 # Examples:
 #   RTSP  – "rtsp://admin:password@192.168.1.64:554/stream"
 #   HTTP  – "http://192.168.1.64:8080/video"
 #   ESP32 – "http://192.168.1.64:81/stream"
-IP_CAM_URL = "rtsp://admin:password@192.168.1.64:554/stream"
+IP_CAM_URL = "rtsp://admin@2026:admin@2026@192.168.1.16/stream1"
 
 # Show the annotated OpenCV preview window while running.
 # Set to False for headless mode (e.g. on Raspberry Pi without a display).
@@ -103,8 +105,18 @@ def _compute_direction(cx: float, frame_w: int) -> tuple[str, float]:
     dead = DEAD_ZONE_RATIO
 
     if offset_x < -dead:
+        print("Direction: LEFT, sending request to turn left")
+        try:
+            urllib.request.urlopen("http://192.168.1.8/left", timeout=0.5)
+        except Exception as e:
+            print(f"[WARN] LEFT request failed: {e}")
         return DIR_LEFT, offset_x
     if offset_x > dead:
+        print("Direction: RIGHT, sending request to turn right")
+        try:
+            urllib.request.urlopen("http://192.168.1.8/right", timeout=0.5)
+        except Exception as e:
+            print(f"[WARN] RIGHT request failed: {e}")
         return DIR_RIGHT, offset_x
     return DIR_CENTER, offset_x
 
