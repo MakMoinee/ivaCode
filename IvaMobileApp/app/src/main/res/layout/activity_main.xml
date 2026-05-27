@@ -26,11 +26,11 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
-            android:background="#F5F5F5"
+            android:background="#0b0b0b"
             app:itemActiveIndicatorStyle="@android:color/black"
-            app:itemIconTint="@color/black"
+            app:itemIconTint="@color/white"
             app:itemTextAppearanceActiveBoldEnabled="true"
-            app:itemTextColor="@color/black"
+            app:itemTextColor="@color/white"
             app:menu="@menu/menu_bottom_nav" />
     </RelativeLayout>
 

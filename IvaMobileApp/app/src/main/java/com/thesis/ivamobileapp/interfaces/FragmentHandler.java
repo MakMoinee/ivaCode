@@ -6,4 +6,6 @@ public interface FragmentHandler {
     void onConnectBT();
     void onSendCommandBT(String command);
     void saveCameraIP(String ip);
+    void onToggleFollowMode(boolean enable);
+    void onConnectCamera();
 }

@@ -2,4 +2,6 @@
 <resources>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+    <color name="joystick_outer">#1d1c21</color>
+    <color name="joystick_knob">#17161b</color>
 </resources>
