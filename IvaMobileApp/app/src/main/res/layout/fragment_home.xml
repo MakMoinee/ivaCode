@@ -6,87 +6,71 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@android:color/white">
+        android:background="#0b0b0b">
 
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="60dp"
-            android:background="@color/black" />
-
-        <TextView
-            android:id="@+id/lblTitle"
+        <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:fontFamily="@font/roboto_regular"
-            android:padding="15dp"
-            android:text="IVA"
-            android:textColor="@color/white"
-            android:textSize="20sp" />
+            android:layout_centerInParent="true"
+            android:gravity="center"
+            android:orientation="vertical">
 
-        <LinearLayout
-            android:id="@+id/linear1"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/lblTitle"
-            android:layout_marginTop="30dp"
-            android:orientation="horizontal">
+            <com.thesis.ivamobileapp.views.JoyStickView
+                android:id="@+id/joystickView"
+                android:layout_width="250dp"
+                android:layout_height="250dp" />
 
             <Button
-                android:id="@+id/btnTop"
-                android:layout_width="0dp"
+                android:id="@+id/btnFollow"
+                android:layout_width="230dp"
                 android:layout_height="60dp"
-                android:layout_weight="1"
-                android:fontFamily="@font/roboto_regular"
-                android:text="Up"
-                android:textColor="@android:color/white"
-                android:textSize="15sp"
-                android:textStyle="bold"
-                android:theme="@style/CustomStyleBlue" />
+                android:layout_marginTop="20dp"
+                android:backgroundTint="#1d1c21"
+                android:text="Enable Follow Mode"
+                android:textColor="@color/white" />
 
             <Button
-                android:id="@+id/btnDown"
-                android:layout_width="0dp"
+                android:id="@+id/btnAction"
+                android:layout_width="230dp"
                 android:layout_height="60dp"
-                android:layout_weight="1"
-                android:fontFamily="@font/roboto_regular"
-                android:text="Down"
-                android:textColor="@android:color/white"
-                android:textSize="15sp"
-                android:textStyle="bold"
-                android:theme="@style/CustomStyleBlack" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/linear2"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_below="@+id/linear1"
-            android:layout_marginTop="10dp"
-            android:orientation="horizontal">
+                android:layout_marginTop="10dp"
+                android:backgroundTint="#1d1c21"
+                android:drawableStart="@drawable/ic_bt"
+                android:drawablePadding="12dp"
+                android:drawableTint="@color/white"
+                android:paddingStart="20dp"
+                android:paddingEnd="20dp"
+                android:text="Connect to IVA"
+                android:textColor="@color/white" />
 
             <Button
-                android:id="@+id/btnLeft"
-                android:layout_width="0dp"
+                android:id="@+id/btnCamera"
+                android:layout_width="230dp"
                 android:layout_height="60dp"
-                android:layout_weight="1"
-                android:fontFamily="@font/roboto_regular"
-                android:text="Left"
-                android:textColor="@android:color/white"
-                android:textSize="15sp"
-                android:textStyle="bold"
-                android:theme="@style/CustomStyleOrange" />
+                android:layout_marginTop="10dp"
+                android:backgroundTint="#1d1c21"
+                android:drawableStart="@drawable/ic_camera"
+                android:drawablePadding="12dp"
+                android:drawableTint="@color/white"
+                android:enabled="false"
+                android:paddingStart="20dp"
+                android:paddingEnd="20dp"
+                android:text="Connect to Camera"
+                android:textColor="@color/white" />
 
             <Button
-                android:id="@+id/btnRight"
-                android:layout_width="0dp"
+                android:id="@+id/btnSetIP"
+                android:layout_width="230dp"
                 android:layout_height="60dp"
-                android:layout_weight="1"
-                android:fontFamily="@font/roboto_regular"
-                android:text="Right"
-                android:textColor="@android:color/white"
-                android:textSize="15sp"
-                android:textStyle="bold" />
+                android:layout_marginTop="10dp"
+                android:backgroundTint="#1d1c21"
+                android:drawableStart="@drawable/ic_camera"
+                android:drawablePadding="12dp"
+                android:drawableTint="@color/white"
+                android:paddingStart="20dp"
+                android:paddingEnd="20dp"
+                android:text="Set Camera IP"
+                android:textColor="@color/white" />
         </LinearLayout>
     </RelativeLayout>
 

@@ -44,7 +44,7 @@ public class MainActivity extends AppCompatActivity implements FragmentHandler {
     OutputStream outputStream;
 
     private static final UUID UUID_SERIAL_PORT = UUID.fromString("00001101-0000-1000-8000-00805F9B34FB");
-    private static final String DEVICE_NAME = "HC-06";  // Replace with your module's Bluetooth name
+    private static final String DEVICE_NAME = "HC-05";  // Replace with your module's Bluetooth name
     CameraPref cameraPref;
 
 
@@ -158,9 +158,26 @@ public class MainActivity extends AppCompatActivity implements FragmentHandler {
     }
 
     @Override
-    public void saveCameraIP(String ip) {
+    public void saveCameraIP(String ip, String server) {
         Map<String,Object> map = new HashMap<>();
         map.put("ip",ip);
+        map.put("server",server);
         new CameraPref(MainActivity.this).storeData(map);
+    }
+
+    @Override
+    public void onToggleFollowMode(boolean enable) {
+        // TODO: Implement follow mode logic
+        if (enable) {
+            sendCommand("%F1#"); // Example command for follow mode ON
+        } else {
+            sendCommand("%F0#"); // Example command for follow mode OFF
+        }
+    }
+
+    @Override
+    public void onConnectCamera() {
+        // TODO: Implement camera connection logic
+        Toast.makeText(this, "Connecting to IVA Camera...", Toast.LENGTH_SHORT).show();
     }
 }

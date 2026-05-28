@@ -8,10 +8,9 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="5dp"
-        android:background="@android:color/white"
-        app:cardBackgroundColor="@android:color/white"
+        app:cardBackgroundColor="#1d1c21"
         app:cardCornerRadius="15dp"
-        app:cardElevation="10dp">
+        app:cardElevation="4dp">
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -23,7 +22,8 @@
                 android:layout_width="100dp"
                 android:layout_height="80dp"
                 android:scaleType="centerInside"
-                android:src="@drawable/ic_bt" />
+                android:src="@drawable/ic_bt"
+                app:tint="@color/white" />
 
             <TextView
                 android:id="@+id/txtSettingName"
@@ -34,7 +34,7 @@
                 android:layout_toRightOf="@+id/imgSettings"
                 android:fontFamily="@font/roboto_regular"
                 android:text="Settings"
-                android:textColor="@android:color/black"
+                android:textColor="@color/white"
                 android:textSize="20sp" />
         </RelativeLayout>
     </androidx.cardview.widget.CardView>

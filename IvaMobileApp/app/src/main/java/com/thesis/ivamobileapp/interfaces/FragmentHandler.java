@@ -5,5 +5,7 @@ public interface FragmentHandler {
     void onSettings();
     void onConnectBT();
     void onSendCommandBT(String command);
-    void saveCameraIP(String ip);
+    void saveCameraIP(String ip, String server);
+    void onToggleFollowMode(boolean enable);
+    void onConnectCamera();
 }

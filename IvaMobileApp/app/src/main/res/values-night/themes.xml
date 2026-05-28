@@ -2,6 +2,8 @@
     <!-- Base application theme. -->
     <style name="Base.Theme.IvaMobileApp" parent="Theme.Material3.DayNight.NoActionBar">
         <!-- Customize your dark theme here. -->
-        <!-- <item name="colorPrimary">@color/my_dark_primary</item> -->
+        <item name="android:windowBackground">#0b0b0b</item>
+        <item name="android:statusBarColor">#0b0b0b</item>
+        <item name="android:windowSplashScreenBackground" tools:targetApi="31">#0b0b0b</item>
     </style>
 </resources>

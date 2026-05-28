@@ -31,6 +31,8 @@ public class SettingsFragment extends Fragment {
     DialogAddCamIpBinding dialogAddCamIpBinding;
     AlertDialog mDialog;
 
+    private boolean isFollowMode = false;
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -44,6 +46,21 @@ public class SettingsFragment extends Fragment {
         if (settingItemList.size() > 0) {
             adapter = new SettingsAdapter(requireContext(), settingItemList, settingName -> {
                 if (settingName != null) {
+                    if (settingName.contains("Follow Mode")) {
+                        isFollowMode = !isFollowMode;
+                        handler.onToggleFollowMode(isFollowMode);
+
+                        // Update the list item text
+                        for (SettingItems item : settingItemList) {
+                            if (item.getSettingName().contains("Follow Mode")) {
+                                item.setSettingName(isFollowMode ? "Disable Follow Mode" : "Enable Follow Mode");
+                                break;
+                            }
+                        }
+                        adapter.notifyDataSetChanged();
+                        return;
+                    }
+
                     switch (settingName) {
                         case "Connect Bluetooth":
                             handler.onConnectBT();
@@ -68,19 +85,26 @@ public class SettingsFragment extends Fragment {
     private void setDialogListeners() {
         dialogAddCamIpBinding.btnSave.setOnClickListener(v -> {
             String ip = dialogAddCamIpBinding.editIP.getText().toString().trim();
-            handler.saveCameraIP(ip);
+            handler.saveCameraIP(ip, "");
             Toast.makeText(requireContext(), "Successfully Saved Camera IP", Toast.LENGTH_SHORT).show();
             mDialog.dismiss();
         });
     }
 
     private void buildSettings() {
-        String settingItem1 = "Connect Bluetooth";
+        settingItemList.clear();
         SettingItems items = new SettingItems.SettingItemBuilder()
-                .setSettingName(settingItem1)
+                .setSettingName("Connect Bluetooth")
                 .setSettingImg(R.drawable.ic_bt)
                 .build();
         settingItemList.add(items);
+
+        items = new SettingItems.SettingItemBuilder()
+                .setSettingName("Enable Follow Mode")
+                .setSettingImg(R.drawable.ic_home) // Using home icon as a placeholder
+                .build();
+        settingItemList.add(items);
+
         items = new SettingItems.SettingItemBuilder()
                 .setSettingName("Set IVA Camera IP")
                 .setSettingImg(R.drawable.ic_camera)
