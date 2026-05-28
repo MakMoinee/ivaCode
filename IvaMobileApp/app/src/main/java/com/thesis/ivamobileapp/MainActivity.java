@@ -158,9 +158,10 @@ public class MainActivity extends AppCompatActivity implements FragmentHandler {
     }
 
     @Override
-    public void saveCameraIP(String ip) {
+    public void saveCameraIP(String ip, String server) {
         Map<String,Object> map = new HashMap<>();
         map.put("ip",ip);
+        map.put("server",server);
         new CameraPref(MainActivity.this).storeData(map);
     }
 

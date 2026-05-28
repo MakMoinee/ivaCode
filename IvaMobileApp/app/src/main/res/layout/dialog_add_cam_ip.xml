@@ -22,7 +22,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/roboto_regular"
-                android:text="Set IVA Camera IP"
+                android:text="Set IVA Camera And Server IP"
                 android:textColor="@android:color/black"
                 android:textSize="20sp"
                 android:textStyle="bold" />
@@ -33,7 +33,7 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/lblSet"
                 android:layout_marginTop="10dp"
-                android:hint="Enter IP: (ex: 192.168.1.1)"
+                android:hint="Enter Cam IP: (ex: 192.168.1.1)"
                 android:textColorHint="@android:color/black"
                 app:startIconDrawable="@drawable/ic_camera">
 
@@ -50,11 +50,34 @@
                     android:textSize="15sp" />
             </com.google.android.material.textfield.TextInputLayout>
 
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/layoutServerIP"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/layoutIP"
+                android:layout_marginTop="10dp"
+                android:hint="Enter Server IP: (ex: 192.168.1.1)"
+                android:textColorHint="@android:color/black"
+                app:startIconDrawable="@drawable/ic_server">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/editServerIP"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/roboto_regular"
+                    android:inputType="text"
+                    android:lines="1"
+                    android:maxLines="1"
+                    android:minLines="1"
+                    android:textColor="@android:color/black"
+                    android:textSize="15sp" />
+            </com.google.android.material.textfield.TextInputLayout>
+
             <Button
                 android:id="@+id/btnSave"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/layoutIP"
+                android:layout_below="@+id/layoutServerIP"
                 android:layout_marginTop="10dp"
                 android:fontFamily="@font/roboto_regular"
                 android:text="Save"

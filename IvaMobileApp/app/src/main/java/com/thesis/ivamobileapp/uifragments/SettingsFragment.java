@@ -49,7 +49,7 @@ public class SettingsFragment extends Fragment {
                     if (settingName.contains("Follow Mode")) {
                         isFollowMode = !isFollowMode;
                         handler.onToggleFollowMode(isFollowMode);
-                        
+
                         // Update the list item text
                         for (SettingItems item : settingItemList) {
                             if (item.getSettingName().contains("Follow Mode")) {
@@ -85,7 +85,7 @@ public class SettingsFragment extends Fragment {
     private void setDialogListeners() {
         dialogAddCamIpBinding.btnSave.setOnClickListener(v -> {
             String ip = dialogAddCamIpBinding.editIP.getText().toString().trim();
-            handler.saveCameraIP(ip);
+            handler.saveCameraIP(ip, "");
             Toast.makeText(requireContext(), "Successfully Saved Camera IP", Toast.LENGTH_SHORT).show();
             mDialog.dismiss();
         });

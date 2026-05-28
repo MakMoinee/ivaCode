@@ -52,12 +52,25 @@
                 android:drawableStart="@drawable/ic_camera"
                 android:drawablePadding="12dp"
                 android:drawableTint="@color/white"
+                android:enabled="false"
                 android:paddingStart="20dp"
                 android:paddingEnd="20dp"
                 android:text="Connect to Camera"
-                android:textColor="@color/white"
-                android:enabled="false"
-                android:alpha="0.5" />
+                android:textColor="@color/white" />
+
+            <Button
+                android:id="@+id/btnSetIP"
+                android:layout_width="230dp"
+                android:layout_height="60dp"
+                android:layout_marginTop="10dp"
+                android:backgroundTint="#1d1c21"
+                android:drawableStart="@drawable/ic_camera"
+                android:drawablePadding="12dp"
+                android:drawableTint="@color/white"
+                android:paddingStart="20dp"
+                android:paddingEnd="20dp"
+                android:text="Set Camera IP"
+                android:textColor="@color/white" />
         </LinearLayout>
     </RelativeLayout>
 

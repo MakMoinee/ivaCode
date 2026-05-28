@@ -5,13 +5,17 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
 
+import com.thesis.ivamobileapp.databinding.DialogAddCamIpBinding;
 import com.thesis.ivamobileapp.databinding.FragmentHomeBinding;
 import com.thesis.ivamobileapp.interfaces.FragmentHandler;
+import com.thesis.ivamobileapp.preference.CameraPref;
 import com.thesis.ivamobileapp.views.JoyStickView;
 
 public class HomeFragment extends Fragment {
@@ -22,12 +26,28 @@ public class HomeFragment extends Fragment {
     private boolean isConnected = false; // Mock connection state
     private boolean isFollowMode = false;
 
+    DialogAddCamIpBinding dialogAddCamIpBinding;
+    AlertDialog mDialog;
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         binding = FragmentHomeBinding.inflate(LayoutInflater.from(requireContext()), container, false);
         setListeners();
+        checkCameraEnable();
         return binding.getRoot();
+    }
+
+    private void checkCameraEnable() {
+        String ip = new CameraPref(requireContext()).getStringItem("ip");
+        if (ip != null && !ip.isEmpty()) {
+            binding.btnCamera.setEnabled(true);
+            binding.btnCamera.setAlpha(1);
+        } else {
+            binding.btnCamera.setEnabled(false);
+            binding.btnCamera.setAlpha(0.5F);
+
+        }
     }
 
     private void setListeners() {
@@ -50,7 +70,7 @@ public class HomeFragment extends Fragment {
                 // Mock state change for UI demonstration
                 isConnected = true;
                 binding.btnAction.setText("Disconnect from IVA");
-                
+
                 // Enable camera button when connected to IVA
                 binding.btnCamera.setEnabled(true);
                 binding.btnCamera.setAlpha(1.0f);
@@ -58,7 +78,7 @@ public class HomeFragment extends Fragment {
                 // handler.onDisconnectBT(); // Placeholder for future backend
                 isConnected = false;
                 binding.btnAction.setText("Connect to IVA");
-                
+
                 // Disable camera button when disconnected from IVA
                 binding.btnCamera.setEnabled(false);
                 binding.btnCamera.setAlpha(0.5f);
@@ -67,6 +87,15 @@ public class HomeFragment extends Fragment {
 
         binding.btnCamera.setOnClickListener(v -> {
             handler.onConnectCamera();
+        });
+
+        binding.btnSetIP.setOnClickListener(view -> {
+            AlertDialog.Builder mBuilder = new AlertDialog.Builder(requireContext());
+            dialogAddCamIpBinding = DialogAddCamIpBinding.inflate(LayoutInflater.from(requireContext()), null, false);
+            mBuilder.setView(dialogAddCamIpBinding.getRoot());
+            setDialogListeners();
+            mDialog = mBuilder.create();
+            mDialog.show();
         });
 
         binding.joystickView.setJoystickListener((xPercent, yPercent) -> {
@@ -109,6 +138,23 @@ public class HomeFragment extends Fragment {
                     }
                 }
             }
+        });
+    }
+
+    private void setDialogListeners() {
+        dialogAddCamIpBinding.btnSave.setOnClickListener(v -> {
+            String ip = dialogAddCamIpBinding.editIP.getText().toString().trim();
+            String serverIP = dialogAddCamIpBinding.editServerIP.getText().toString().trim();
+            if (serverIP.isEmpty() || ip.isEmpty()) {
+                Toast.makeText(requireContext(), "Please Don't Leave Empty Fields", Toast.LENGTH_SHORT).show();
+            } else {
+                handler.saveCameraIP(ip, serverIP);
+                Toast.makeText(requireContext(), "Successfully Saved Camera IP", Toast.LENGTH_SHORT).show();
+                binding.btnCamera.setEnabled(true);
+                binding.btnCamera.setAlpha(1);
+                mDialog.dismiss();
+            }
+
         });
     }
 
