@@ -42,7 +42,7 @@ from deep_sort_realtime.deepsort_tracker import DeepSort
 # Change CAMERA_MODE to switch sources without touching the CLI.
 #   "laptop" → index 0 (built-in / USB webcam)
 #   "ipcam"  → IP camera stream defined by IP_CAM_URL
-CAMERA_MODE = "ipcam"
+CAMERA_MODE = "laptop"
 
 # Full RTSP or HTTP URL of your IP camera.
 # Examples:
@@ -107,14 +107,14 @@ def _compute_direction(cx: float, frame_w: int) -> tuple[str, float]:
     if offset_x < -dead:
         print("Direction: LEFT, sending request to turn left")
         try:
-            urllib.request.urlopen("http://192.168.1.8/left", timeout=0.5)
+            urllib.request.urlopen("http://192.168.1.9/left", timeout=0.5)
         except Exception as e:
             print(f"[WARN] LEFT request failed: {e}")
         return DIR_LEFT, offset_x
     if offset_x > dead:
         print("Direction: RIGHT, sending request to turn right")
         try:
-            urllib.request.urlopen("http://192.168.1.8/right", timeout=0.5)
+            urllib.request.urlopen("http://192.168.1.9/right", timeout=0.5)
         except Exception as e:
             print(f"[WARN] RIGHT request failed: {e}")
         return DIR_RIGHT, offset_x

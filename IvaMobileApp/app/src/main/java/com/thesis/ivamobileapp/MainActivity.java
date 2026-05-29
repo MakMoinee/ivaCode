@@ -21,10 +21,12 @@ import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.NavigationUI;
 
+import com.github.MakMoinee.library.interfaces.DefaultBaseListener;
 import com.google.android.material.navigation.NavigationBarView;
 import com.thesis.ivamobileapp.databinding.ActivityMainBinding;
 import com.thesis.ivamobileapp.interfaces.FragmentHandler;
 import com.thesis.ivamobileapp.preference.CameraPref;
+import com.thesis.ivamobileapp.services.ServerRequests;
 
 import java.io.IOException;
 import java.io.OutputStream;
@@ -42,6 +44,7 @@ public class MainActivity extends AppCompatActivity implements FragmentHandler {
     BluetoothDevice ivaCarDevice;
     ProgressDialog progressDialog;
     OutputStream outputStream;
+    ServerRequests serverRequests;
 
     private static final UUID UUID_SERIAL_PORT = UUID.fromString("00001101-0000-1000-8000-00805F9B34FB");
     private static final String DEVICE_NAME = "HC-05";  // Replace with your module's Bluetooth name
@@ -124,6 +127,22 @@ public class MainActivity extends AppCompatActivity implements FragmentHandler {
     }
 
     private void sendCommand(String command) {
+        String serverIP = new CameraPref(MainActivity.this).getStringItem("server");
+        if (serverIP != null && !serverIP.isEmpty()) {
+            serverRequests = new ServerRequests(MainActivity.this, serverIP);
+            serverRequests.sendCommand(command, new DefaultBaseListener() {
+                @Override
+                public <T> void onSuccess(T any) {
+                    Toast.makeText(MainActivity.this, "Successfully send command", Toast.LENGTH_SHORT).show();
+                }
+
+                @Override
+                public void onError(Error error) {
+
+                }
+            });
+        }
+
         if (outputStream != null) {
             try {
                 outputStream.write(command.getBytes());
@@ -133,7 +152,7 @@ public class MainActivity extends AppCompatActivity implements FragmentHandler {
                 Toast.makeText(this, "Failed to send command", Toast.LENGTH_SHORT).show();
             }
         } else {
-            Toast.makeText(this, "Not connected to IVA", Toast.LENGTH_SHORT).show();
+//            Toast.makeText(this, "Not connected to IVA", Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -159,9 +178,9 @@ public class MainActivity extends AppCompatActivity implements FragmentHandler {
 
     @Override
     public void saveCameraIP(String ip, String server) {
-        Map<String,Object> map = new HashMap<>();
-        map.put("ip",ip);
-        map.put("server",server);
+        Map<String, Object> map = new HashMap<>();
+        map.put("ip", ip);
+        map.put("server", server);
         new CameraPref(MainActivity.this).storeData(map);
     }
 
