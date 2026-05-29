@@ -16,8 +16,24 @@ public class ServerRequests extends LocalVolleyRequest {
     }
 
     public void sendCommand(String path, DefaultBaseListener listener) {
+        String newPath = "";
+        switch (path){
+            case "%A#":
+                newPath = "/forward";
+                break;
+            case "%B#":
+                newPath = "/backward";
+                break;
+            case "%C#":
+                newPath = "/left";
+                break;
+            case "%D#":
+                newPath = "/right";
+                break;
+
+        }
         LocalVolleyRequestBody body = new LocalVolleyRequestBody.LocalVolleyRequestBodyBuilder()
-                .setUrl(String.format("http://%s%s", this.serverIP, path))
+                .setUrl(String.format("http://%s%s", this.serverIP, newPath))
                 .build();
         this.sendTextPlainRequest(body, new LocalVolleyRequestListener() {
             @Override
