@@ -262,35 +262,6 @@ So the API starts whenever the Pi powers up:
 sudo nano /etc/systemd/system/detect-api.service
 ```
 
-Paste (adjust the username/path if you didn't use `ubuntu`/`~/raspberry`):
-
-```ini
-[Unit]
-Description=Person Detection Flask API
-After=network-online.target
-Wants=network-online.target
-
-[Service]
-User=ubuntu
-WorkingDirectory=/home/ubuntu/raspberry
-ExecStart=/home/ubuntu/raspberry/.venv/bin/python api.py --host 0.0.0.0 --port 5000
-Restart=on-failure
-RestartSec=5
-
-[Install]
-WantedBy=multi-user.target
-```
-
-Enable and start it:
-
-```bash
-sudo systemctl daemon-reload
-sudo systemctl enable --now detect-api.service
-sudo systemctl status detect-api.service      # check it's running
-journalctl -u detect-api.service -f           # follow the logs
-```
-
----
 
 ## Troubleshooting
 
